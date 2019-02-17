@@ -30,7 +30,7 @@ public class BranchController {
 	BranchRepository branchRepository;
 
 	@GetMapping("/")
-	public List<Branch> getAllBranch() {
+	public List<Branch> getAllBranches() {
 		return branchRepository.findAll();
 	}
 
@@ -40,13 +40,13 @@ public class BranchController {
 	}
 
 	@GetMapping("/{id}")
-	public Branch getNoteById(@PathVariable(value = "id") Long branchId) {
+	public Branch getBranchById(@PathVariable(value = "id") Long branchId) {
 		return branchRepository.findById(branchId)
 				.orElseThrow(() -> new ResourceNotFoundException("BranchId", "id", branchId));
 	}
 
 	@PutMapping("/{id}")
-	public Branch updateNote(@PathVariable(value = "id") Long branchId, @Valid @RequestBody Branch branchDetails) {
+	public Branch updateBranch(@PathVariable(value = "id") Long branchId, @Valid @RequestBody Branch branchDetails) {
 
 		Branch branch = branchRepository.findById(branchId)
 				.orElseThrow(() -> new ResourceNotFoundException("Branch", "id", branchId));
@@ -57,13 +57,13 @@ public class BranchController {
 		branch.setPhone(branchDetails.getPhone());
 		branch.setState(branchDetails.getState());
 		branch.setZip(branchDetails.getZip());
-		
+
 		Branch updatedBranch = branchRepository.save(branch);
 		return updatedBranch;
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long branchId) {
+	public ResponseEntity<?> deleteBranch(@PathVariable(value = "id") Long branchId) {
 		Branch branch = branchRepository.findById(branchId)
 				.orElseThrow(() -> new ResourceNotFoundException("Note", "id", branchId));
 

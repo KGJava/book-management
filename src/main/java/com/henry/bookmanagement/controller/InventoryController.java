@@ -30,7 +30,7 @@ public class InventoryController {
 	InventoryRepository inventoryRepository;
 
 	@GetMapping("/")
-	public List<Inventory> getAllInventorys() {
+	public List<Inventory> getAllInventories() {
 		return inventoryRepository.findAll();
 	}
 
