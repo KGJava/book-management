@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.henry.bookmanagement.exception.BadRequestException;
 import com.henry.bookmanagement.exception.ResourceNotFoundException;
 import com.henry.bookmanagement.model.Book;
 import com.henry.bookmanagement.model.Branch;
@@ -48,6 +49,23 @@ public class InventoryController {
 
 	@PostMapping("/")
 	public Inventory createInventory(@Valid @RequestBody Inventory inventory) {
+		if (inventory == null) {
+			throw new BadRequestException("Inventory must not be null");
+		} else {
+			if (inventory.getBookId() == null) {
+				throw new BadRequestException("Book Id must not be null");
+			}
+			if (inventory.getBranchId() == null) {
+				throw new BadRequestException("Branch Id must not be null");
+			}
+			if (inventory.getQuantity() == null) {
+				throw new BadRequestException("Quantity must not be null");
+			}
+		}
+		bookRepository.findById(inventory.getBookId())
+				.orElseThrow(() -> new BadRequestException("Invalid Book Id provided,"));
+		branchRepository.findById(inventory.getBranchId())
+				.orElseThrow(() -> new BadRequestException("Invalid branch Id provided."));
 		return inventoryRepository.save(inventory);
 	}
 
@@ -73,6 +91,10 @@ public class InventoryController {
 
 		inventory.setQuantity(inventoryDetails.getQuantity());
 
+		bookRepository.findById(inventory.getBookId())
+				.orElseThrow(() -> new BadRequestException("Invalid Book Id provided,"));
+		branchRepository.findById(inventory.getBranchId())
+				.orElseThrow(() -> new BadRequestException("Invalid branch Id provided."));
 		Inventory updatedInventory = inventoryRepository.save(inventory);
 		return updatedInventory;
 	}

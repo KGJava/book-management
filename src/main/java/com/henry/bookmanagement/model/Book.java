@@ -18,6 +18,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Swapnil on 02/16/19.
@@ -32,12 +33,15 @@ public class Book {
 	private Long id;
 
 	@NotBlank
+	@JsonProperty(value = "title", required = true)
 	private String title;
 
 	@NotBlank
+	@JsonProperty(value = "description", required = true)
 	private String description;
 
 	@NotBlank
+	@JsonProperty(value = "thumbnailUrl", required = true)
 	private String thumbnailUrl;
 
 	private Double price;

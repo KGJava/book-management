@@ -18,6 +18,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Swapnil on 02/16/19.
@@ -31,10 +32,11 @@ public class Inventory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonProperty(value = "bookId", required = true)
 	private Long bookId;
-
+	@JsonProperty(value = "branchId", required = true)
 	private Long branchId;
-
+	@JsonProperty(value = "quantity", required = true)
 	private Long quantity;
 
 	@Column(nullable = false, updatable = false)

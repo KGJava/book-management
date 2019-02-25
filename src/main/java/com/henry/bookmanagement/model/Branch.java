@@ -18,6 +18,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Swapnil on 02/16/19.
@@ -32,21 +33,27 @@ public class Branch {
 	private Long id;
 
 	@NotBlank
+	@JsonProperty(value = "branchName", required = true)
 	private String branchName;
 
 	@NotBlank
+	@JsonProperty(value = "address", required = true)
 	private String address;
 
 	@NotBlank
+	@JsonProperty(value = "city", required = true)
 	private String city;
 
 	@NotBlank
+	@JsonProperty(value = "state", required = true)
 	private String state;
 
 	@NotBlank
+	@JsonProperty(value = "zip", required = true)
 	private String zip;
 
 	@NotBlank
+	@JsonProperty(value = "phone", required = true)
 	private String phone;
 
 	public Long getId() {
