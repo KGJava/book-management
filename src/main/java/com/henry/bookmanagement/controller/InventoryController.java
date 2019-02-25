@@ -62,11 +62,14 @@ public class InventoryController {
 				throw new BadRequestException("Quantity must not be null");
 			}
 		}
-		bookRepository.findById(inventory.getBookId())
+		Book book = bookRepository.findById(inventory.getBookId())
 				.orElseThrow(() -> new BadRequestException("Invalid Book Id provided,"));
-		branchRepository.findById(inventory.getBranchId())
+		Branch branch = branchRepository.findById(inventory.getBranchId())
 				.orElseThrow(() -> new BadRequestException("Invalid branch Id provided."));
-		return inventoryRepository.save(inventory);
+		Inventory savedInventory = inventoryRepository.save(inventory);
+		savedInventory.setBranchName(branch.getBranchName());
+		savedInventory.setBookTitle(book.getTitle());
+		return savedInventory;
 	}
 
 	@GetMapping("/{id}")
@@ -91,11 +94,14 @@ public class InventoryController {
 
 		inventory.setQuantity(inventoryDetails.getQuantity());
 
-		bookRepository.findById(inventory.getBookId())
+		Book book = bookRepository.findById(inventory.getBookId())
 				.orElseThrow(() -> new BadRequestException("Invalid Book Id provided,"));
-		branchRepository.findById(inventory.getBranchId())
+		Branch branch = branchRepository.findById(inventory.getBranchId())
 				.orElseThrow(() -> new BadRequestException("Invalid branch Id provided."));
 		Inventory updatedInventory = inventoryRepository.save(inventory);
+		updatedInventory.setBranchName(branch.getBranchName());
+		updatedInventory.setBookTitle(book.getTitle());
+
 		return updatedInventory;
 	}
 
